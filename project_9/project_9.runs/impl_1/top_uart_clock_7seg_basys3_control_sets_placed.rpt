@@ -1,0 +1,96 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
+| Date         : Sat Nov 29 18:32:18 2025
+| Host         : thaituanhiep running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file top_uart_clock_7seg_basys3_control_sets_placed.rpt
+| Design       : top_uart_clock_7seg_basys3
+| Device       : xc7a35t
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    18 |
+|    Minimum number of control sets                        |    18 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    54 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    18 |
+| >= 0 to < 4        |     2 |
+| >= 4 to < 6        |     7 |
+| >= 6 to < 8        |     2 |
+| >= 8 to < 10       |     2 |
+| >= 10 to < 12      |     0 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     1 |
+| >= 16              |     4 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              28 |            9 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |              43 |           12 |
+| Yes          | No                    | No                     |              50 |           18 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |              41 |           12 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++----------------------+------------------------------------+------------------------------+------------------+----------------+--------------+
+|     Clock Signal     |            Enable Signal           |       Set/Reset Signal       | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------------+------------------------------------+------------------------------+------------------+----------------+--------------+
+|  CLK100MHZ_IBUF_BUFG | U_RX/r_Clk_Count                   |                              |                1 |              1 |         1.00 |
+|  CLK100MHZ_IBUF_BUFG | U_TX/r_State__0[2]                 |                              |                1 |              1 |         1.00 |
+|  CLK100MHZ_IBUF_BUFG | U_RX/FSM_onehot_idx_reg[0]         |                              |                1 |              4 |         4.00 |
+|  CLK100MHZ_IBUF_BUFG | U_RX/FSM_onehot_idx_reg[1]         |                              |                1 |              4 |         4.00 |
+|  CLK100MHZ_IBUF_BUFG | U_RX/FSM_onehot_idx_reg[3]_0       | U_RX/d1_reg                  |                1 |              4 |         4.00 |
+|  CLK100MHZ_IBUF_BUFG | U_RX/FSM_onehot_idx_reg[2]         |                              |                1 |              4 |         4.00 |
+|  CLK100MHZ_IBUF_BUFG | U_RX/FSM_onehot_idx_reg[3]_1       |                              |                1 |              4 |         4.00 |
+|  CLK100MHZ_IBUF_BUFG | hour[4]_i_1_n_0                    |                              |                2 |              5 |         2.50 |
+|  CLK100MHZ_IBUF_BUFG | U_RX/FSM_onehot_r_State[4]_i_1_n_0 |                              |                2 |              5 |         2.50 |
+|  CLK100MHZ_IBUF_BUFG | minute[5]_i_1_n_0                  |                              |                4 |              6 |         1.50 |
+|  CLK100MHZ_IBUF_BUFG | second[5]_i_2_n_0                  | second[5]_i_1_n_0            |                2 |              6 |         3.00 |
+|  CLK100MHZ_IBUF_BUFG | U_RX/E[0]                          |                              |                2 |              8 |         4.00 |
+|  CLK100MHZ_IBUF_BUFG | U_TX/r_Tx_Data                     |                              |                2 |              8 |         4.00 |
+|  CLK100MHZ_IBUF_BUFG | U_RX/r_Clk_Count                   | U_RX/r_Clk_Count[15]_i_1_n_0 |                4 |             15 |         3.75 |
+|  CLK100MHZ_IBUF_BUFG |                                    | sel                          |                5 |             16 |         3.20 |
+|  CLK100MHZ_IBUF_BUFG | U_TX/r_State__0[2]                 | U_TX/r_Clk_Count[15]_i_1_n_0 |                5 |             16 |         3.20 |
+|  CLK100MHZ_IBUF_BUFG |                                    | tick_1hz                     |                7 |             27 |         3.86 |
+|  CLK100MHZ_IBUF_BUFG |                                    |                              |                9 |             28 |         3.11 |
++----------------------+------------------------------------+------------------------------+------------------+----------------+--------------+
+
+
