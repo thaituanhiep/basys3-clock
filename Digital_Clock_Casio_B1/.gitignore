@@ -1,0 +1,36 @@
+# ===== JVM / Vivado crash & log =====
+hs_err_pid*.dmp
+hs_err_pid*.log
+
+vivado_*.backup.jou
+vivado_*.backup.log
+vivado_pid*.str
+
+vivado.jou
+vivado.log
+
+# ===== Vivado / FPGA =====
+*.jou
+*.log
+*.str
+*.tmp
+
+
+
+
+# ===== Windows =====
+Thumbs.db
+Desktop.ini
+
+# ===== Editor =====
+.vscode/
+*.swp
+*.bak
+
+# ===== Build / Output =====
+build/
+dist/
+out/
+
+# ===== Backup files =====
+*~
