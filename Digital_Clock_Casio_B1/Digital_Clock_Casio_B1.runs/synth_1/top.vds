@@ -3,28 +3,27 @@
 # SW Build 6140274 on Thu May 22 00:12:29 MDT 2025
 # IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
 # SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
-# Start of session at: Tue Dec 16 00:14:10 2025
-# Process ID         : 13300
-# Current directory  : E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.runs/synth_1
+# Start of session at: Thu Dec 18 19:43:58 2025
+# Process ID         : 17296
+# Current directory  : C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.runs/synth_1
 # Command line       : vivado.exe -log top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top.tcl
-# Log file           : E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.runs/synth_1/top.vds
-# Journal file       : E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.runs/synth_1\vivado.jou
-# Running On         : TrungPC
+# Log file           : C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.runs/synth_1/top.vds
+# Journal file       : C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.runs/synth_1\vivado.jou
+# Running On         : thaituanhiep
 # Platform           : Windows Server 2016 or Windows 10
-# Operating System   : 26100
-# Processor Detail   : Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz
-# CPU Frequency      : 1800 MHz
-# CPU Physical cores : 4
-# CPU Logical cores  : 8
-# Host memory        : 17056 MB
-# Swap memory        : 5720 MB
-# Total Virtual      : 22777 MB
-# Available Virtual  : 3584 MB
+# Operating System   : 26200
+# Processor Detail   : 11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz
+# CPU Frequency      : 2688 MHz
+# CPU Physical cores : 6
+# CPU Logical cores  : 12
+# Host memory        : 33980 MB
+# Swap memory        : 2147 MB
+# Total Virtual      : 36127 MB
+# Available Virtual  : 22731 MB
 #-----------------------------------------------------------
 source top.tcl -notrace
-create_project: Time (s): cpu = 00:00:18 ; elapsed = 00:00:10 . Memory (MB): peak = 491.582 ; gain = 211.219
-Command: read_checkpoint -auto_incremental -incremental {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/utils_1/imports/synth_1/top.dcp}
-INFO: [Vivado 12-5825] Read reference checkpoint from E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/utils_1/imports/synth_1/top.dcp for incremental synthesis
+Command: read_checkpoint -auto_incremental -incremental C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/utils_1/imports/synth_1/top.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/utils_1/imports/synth_1/top.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
 Command: synth_design -top top -part xc7a35tcpg236-1
 Starting synth_design
@@ -35,81 +34,120 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 20244
+INFO: [Synth 8-7075] Helper process launched with PID 2700
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:13 ; elapsed = 00:00:16 . Memory (MB): peak = 1178.828 ; gain = 494.535
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1262.836 ; gain = 494.273
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-6157] synthesizing module 'top' [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:1]
-INFO: [Synth 8-6157] synthesizing module 'tick_1hz_gen' [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/clock_1hz.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'tick_1hz_gen' (0#1) [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/clock_1hz.v:1]
-INFO: [Synth 8-6157] synthesizing module 'debounce' [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/debounce.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'debounce' (0#1) [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/debounce.v:1]
-INFO: [Synth 8-6157] synthesizing module 'ModeFSM' [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/ModeFSM.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'ModeFSM' (0#1) [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/ModeFSM.v:1]
-INFO: [Synth 8-6157] synthesizing module 'blink_gen' [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/blink_gen.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'blink_gen' (0#1) [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/blink_gen.v:1]
-INFO: [Synth 8-6157] synthesizing module 'DigitalClock' [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/DigitalClock.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'DigitalClock' (0#1) [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/DigitalClock.v:1]
-INFO: [Synth 8-6157] synthesizing module 'alarm' [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/alarm.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'alarm' (0#1) [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/alarm.v:1]
-INFO: [Synth 8-6157] synthesizing module 'countdown' [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/countdown_timer.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'countdown' (0#1) [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/countdown_timer.v:1]
-INFO: [Synth 8-6157] synthesizing module 'stopwatch' [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/stopwatch.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'stopwatch' (0#1) [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/stopwatch.v:1]
-INFO: [Synth 8-6157] synthesizing module 'sevseg' [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/sevseg.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'sevseg' (0#1) [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/sevseg.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'top' (0#1) [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:1]
-WARNING: [Synth 8-3848] Net dc_hour in module/entity top does not have driver. [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:87]
-WARNING: [Synth 8-3848] Net dc_min in module/entity top does not have driver. [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:88]
-WARNING: [Synth 8-3848] Net alarm_enable in module/entity top does not have driver. [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:111]
+INFO: [Synth 8-11241] undeclared symbol 'ext_hh', assumed default net type 'wire' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:103]
+INFO: [Synth 8-11241] undeclared symbol 'ext_mm', assumed default net type 'wire' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:104]
+INFO: [Synth 8-11241] undeclared symbol 'ext_set_pulse', assumed default net type 'wire' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:105]
+WARNING: [Synth 8-8895] 'ext_hh' is already implicitly declared on line 103 [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:236]
+WARNING: [Synth 8-8895] 'ext_mm' is already implicitly declared on line 104 [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:237]
+WARNING: [Synth 8-8895] 'ext_set_pulse' is already implicitly declared on line 105 [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:238]
+INFO: [Synth 8-6157] synthesizing module 'top' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:1]
+INFO: [Synth 8-6157] synthesizing module 'tick_1hz_gen' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/clock_1hz.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'tick_1hz_gen' (0#1) [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/clock_1hz.v:1]
+INFO: [Synth 8-6157] synthesizing module 'debounce' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/debounce.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'debounce' (0#1) [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/debounce.v:1]
+INFO: [Synth 8-6157] synthesizing module 'ModeFSM' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/ModeFSM.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'ModeFSM' (0#1) [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/ModeFSM.v:1]
+INFO: [Synth 8-6157] synthesizing module 'blink_gen' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/blink_gen.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'blink_gen' (0#1) [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/blink_gen.v:1]
+INFO: [Synth 8-6157] synthesizing module 'DigitalClock' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/DigitalClock.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'DigitalClock' (0#1) [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/DigitalClock.v:1]
+INFO: [Synth 8-6157] synthesizing module 'alarm' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/alarm.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'alarm' (0#1) [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/alarm.v:1]
+INFO: [Synth 8-6157] synthesizing module 'countdown' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/countdown_timer.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'countdown' (0#1) [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/countdown_timer.v:1]
+INFO: [Synth 8-6157] synthesizing module 'stopwatch' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/stopwatch.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'stopwatch' (0#1) [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/stopwatch.v:1]
+INFO: [Synth 8-6157] synthesizing module 'sevseg' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/sevseg.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'sevseg' (0#1) [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/sevseg.v:1]
+INFO: [Synth 8-6157] synthesizing module 'uart_rx' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/uart_rx.v:23]
+	Parameter CLK_HZ bound to: 100000000 - type: integer 
+	Parameter BAUD bound to: 115200 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'uart_rx' (0#1) [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/uart_rx.v:23]
+INFO: [Synth 8-6157] synthesizing module 'time_uart_parser' [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/time_uart_parser.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'time_uart_parser' (0#1) [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/time_uart_parser.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'top' (0#1) [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:1]
+WARNING: [Synth 8-6014] Unused sequential element hh7_reg was removed.  [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/time_uart_parser.v:86]
+WARNING: [Synth 8-6014] Unused sequential element mm7_reg was removed.  [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/time_uart_parser.v:86]
+WARNING: [Synth 8-6014] Unused sequential element VALIDATE_AND_LATCH.hh_tmp_reg was removed.  [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/time_uart_parser.v:150]
+WARNING: [Synth 8-6014] Unused sequential element VALIDATE_AND_LATCH.mm_tmp_reg was removed.  [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/time_uart_parser.v:151]
+WARNING: [Synth 8-3848] Net dc_hour in module/entity top does not have driver. [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:88]
+WARNING: [Synth 8-3848] Net dc_min in module/entity top does not have driver. [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:89]
+WARNING: [Synth 8-3848] Net alarm_enable in module/entity top does not have driver. [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v:118]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:15 ; elapsed = 00:00:19 . Memory (MB): peak = 1289.762 ; gain = 605.469
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1375.277 ; gain = 606.715
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:16 ; elapsed = 00:00:20 . Memory (MB): peak = 1289.762 ; gain = 605.469
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1375.277 ; gain = 606.715
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:16 ; elapsed = 00:00:20 . Memory (MB): peak = 1289.762 ; gain = 605.469
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1375.277 ; gain = 606.715
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 1289.762 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1375.277 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc]
-Finished Parsing XDC File [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc]
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
+Parsing XDC File [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc]
+Finished Parsing XDC File [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1398.574 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1416.285 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1398.574 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1416.285 ; gain = 0.000
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:34 ; elapsed = 00:00:40 . Memory (MB): peak = 1398.574 ; gain = 714.281
+Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1416.285 ; gain = 647.723
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tcpg236-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:34 ; elapsed = 00:00:40 . Memory (MB): peak = 1398.574 ; gain = 714.281
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1416.285 ; gain = 647.723
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:34 ; elapsed = 00:00:40 . Memory (MB): peak = 1398.574 ; gain = 714.281
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1416.285 ; gain = 647.723
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'uart_rx'
+INFO: [Synth 8-802] inferred FSM for state register 'st_reg' in module 'time_uart_parser'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                  S_IDLE |                            00001 |                              000
+                 S_START |                            00010 |                              001
+                  S_DATA |                            00100 |                              010
+                  S_STOP |                            01000 |                              011
+                  S_DONE |                            10000 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'uart_rx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                P_WAIT_T |                              000 |                              000
+                    P_H1 |                              001 |                              001
+                    P_H2 |                              010 |                              010
+                    P_M1 |                              011 |                              011
+                    P_M2 |                              100 |                              100
+               P_WAIT_NL |                              101 |                              101
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'st_reg' using encoding 'sequential' in module 'time_uart_parser'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:35 ; elapsed = 00:00:41 . Memory (MB): peak = 1398.574 ; gain = 714.281
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1416.285 ; gain = 647.723
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -117,27 +155,39 @@ Start RTL Component Statistics
 Detailed RTL Component Info : 
 +---Adders : 
 	   2 Input   27 Bit       Adders := 1     
+	   2 Input   10 Bit       Adders := 1     
 	   2 Input    6 Bit       Adders := 11    
 	   2 Input    5 Bit       Adders := 5     
+	   2 Input    3 Bit       Adders := 1     
 	   2 Input    2 Bit       Adders := 1     
 +---Registers : 
 	               27 Bit    Registers := 1     
 	               16 Bit    Registers := 5     
+	               10 Bit    Registers := 1     
+	                8 Bit    Registers := 2     
 	                7 Bit    Registers := 1     
-	                6 Bit    Registers := 10    
+	                6 Bit    Registers := 12    
 	                5 Bit    Registers := 4     
-	                4 Bit    Registers := 2     
-	                3 Bit    Registers := 1     
+	                4 Bit    Registers := 4     
+	                3 Bit    Registers := 2     
 	                2 Bit    Registers := 1     
-	                1 Bit    Registers := 25    
+	                1 Bit    Registers := 29    
 +---Muxes : 
 	   2 Input   16 Bit        Muxes := 4     
-	   2 Input    6 Bit        Muxes := 18    
-	   2 Input    5 Bit        Muxes := 6     
+	   5 Input   10 Bit        Muxes := 1     
+	   5 Input    8 Bit        Muxes := 1     
+	   2 Input    6 Bit        Muxes := 19    
+	   2 Input    5 Bit        Muxes := 8     
+	   5 Input    5 Bit        Muxes := 1     
 	   2 Input    4 Bit        Muxes := 12    
 	   4 Input    4 Bit        Muxes := 2     
 	   8 Input    3 Bit        Muxes := 2     
-	   2 Input    1 Bit        Muxes := 34    
+	   2 Input    3 Bit        Muxes := 6     
+	   5 Input    3 Bit        Muxes := 1     
+	   6 Input    3 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 38    
+	   5 Input    1 Bit        Muxes := 4     
+	   6 Input    1 Bit        Muxes := 6     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -155,25 +205,25 @@ Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:52 ; elapsed = 00:00:59 . Memory (MB): peak = 1454.945 ; gain = 770.652
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:19 ; elapsed = 00:00:19 . Memory (MB): peak = 1545.062 ; gain = 776.500
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:05 ; elapsed = 00:01:13 . Memory (MB): peak = 1501.312 ; gain = 817.020
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:23 ; elapsed = 00:00:24 . Memory (MB): peak = 1589.117 ; gain = 820.555
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:01:10 ; elapsed = 00:01:19 . Memory (MB): peak = 1549.422 ; gain = 865.129
+Finished Timing Optimization : Time (s): cpu = 00:00:25 ; elapsed = 00:00:25 . Memory (MB): peak = 1635.949 ; gain = 867.387
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:01:11 ; elapsed = 00:01:19 . Memory (MB): peak = 1556.867 ; gain = 872.574
+Finished Technology Mapping : Time (s): cpu = 00:00:25 ; elapsed = 00:00:26 . Memory (MB): peak = 1645.215 ; gain = 876.652
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -191,37 +241,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:01:24 ; elapsed = 00:01:33 . Memory (MB): peak = 1750.602 ; gain = 1066.309
+Finished IO Insertion : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 1838.230 ; gain = 1069.668
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:01:24 ; elapsed = 00:01:33 . Memory (MB): peak = 1750.602 ; gain = 1066.309
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 1838.230 ; gain = 1069.668
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:24 ; elapsed = 00:01:34 . Memory (MB): peak = 1750.602 ; gain = 1066.309
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 1838.230 ; gain = 1069.668
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:01:24 ; elapsed = 00:01:34 . Memory (MB): peak = 1750.602 ; gain = 1066.309
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 1838.230 ; gain = 1069.668
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:01:24 ; elapsed = 00:01:34 . Memory (MB): peak = 1750.602 ; gain = 1066.309
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 1838.230 ; gain = 1069.668
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:01:24 ; elapsed = 00:01:34 . Memory (MB): peak = 1750.602 ; gain = 1066.309
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 1838.230 ; gain = 1069.668
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -239,38 +289,38 @@ Report Cell Usage:
 +------+-------+------+
 |1     |BUFG   |     1|
 |2     |CARRY4 |    12|
-|3     |LUT1   |    10|
-|4     |LUT2   |    34|
-|5     |LUT3   |    27|
-|6     |LUT4   |    34|
-|7     |LUT5   |    45|
-|8     |LUT6   |   141|
-|9     |FDRE   |   239|
-|10    |IBUF   |     6|
+|3     |LUT1   |     7|
+|4     |LUT2   |    39|
+|5     |LUT3   |    37|
+|6     |LUT4   |    43|
+|7     |LUT5   |    66|
+|8     |LUT6   |   190|
+|9     |FDRE   |   308|
+|10    |IBUF   |     7|
 |11    |OBUF   |    27|
 +------+-------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:01:24 ; elapsed = 00:01:34 . Memory (MB): peak = 1750.602 ; gain = 1066.309
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:28 ; elapsed = 00:00:29 . Memory (MB): peak = 1838.230 ; gain = 1069.668
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:01:06 ; elapsed = 00:01:30 . Memory (MB): peak = 1750.602 ; gain = 957.496
-Synthesis Optimization Complete : Time (s): cpu = 00:01:25 ; elapsed = 00:01:34 . Memory (MB): peak = 1750.602 ; gain = 1066.309
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:22 ; elapsed = 00:00:28 . Memory (MB): peak = 1838.230 ; gain = 1028.660
+Synthesis Optimization Complete : Time (s): cpu = 00:00:29 ; elapsed = 00:00:29 . Memory (MB): peak = 1838.230 ; gain = 1069.668
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 1759.789 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1847.391 ; gain = 0.000
 INFO: [Netlist 29-17] Analyzing 12 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1763.449 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1851.066 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete | Checksum: 81c50824
+Synth Design complete | Checksum: c8319221
 INFO: [Common 17-83] Releasing license: Synthesis
-41 Infos, 4 Warnings, 0 Critical Warnings and 0 Errors encountered.
+52 Infos, 11 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:01:32 ; elapsed = 00:01:45 . Memory (MB): peak = 1763.449 ; gain = 1265.387
-Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1763.449 ; gain = 0.000
-INFO: [Common 17-1381] The checkpoint 'E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.runs/synth_1/top.dcp' has been generated.
+synth_design: Time (s): cpu = 00:00:31 ; elapsed = 00:00:33 . Memory (MB): peak = 1851.066 ; gain = 1270.309
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1851.066 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.runs/synth_1/top.dcp' has been generated.
 INFO: [Vivado 12-24828] Executing command : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Tue Dec 16 00:16:10 2025...
+INFO: [Common 17-206] Exiting Vivado at Thu Dec 18 19:44:38 2025...

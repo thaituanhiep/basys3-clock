@@ -7,6 +7,7 @@ module top (
     input wire IO_BTN_U,
     input wire IO_BTN_D,
     input wire IO_BTN_C,
+    input wire uart_rx_pin,
 
     // 7-seg
     output wire [3:0] IO_SSEG_SEL,
@@ -98,9 +99,15 @@ module top (
       .digit0(dc_d0),
       .digit1(dc_d1),
       .digit2(dc_d2),
-      .digit3(dc_d3)
+      .digit3(dc_d3),
+            .ext_hh(ext_hh),
+      .ext_mm(ext_mm),
+      .ext_set_pulse(ext_set_pulse)
+
       // Giả sử module DigitalClock expose hour/min ra dc_hour/dc_min
   );
+  
+
 
   // =====================================================
   // ALARM
@@ -198,7 +205,7 @@ module top (
   wire alarm_alert = (alarm_alert_counter > 0);
   wire countdown_alert = cd_alert;
   wire led_alert = (alarm_alert | countdown_alert) & blink;
-  assign LD = {16{led_alert}};
+//  assign LD = {16{led_alert}};
 
   // =====================================================
   // DISPLAY MUX
@@ -223,5 +230,42 @@ module top (
       .IO_SSEG_SEL(IO_SSEG_SEL),
       .IO_SSEG(IO_SSEG)
   );
+  
+wire [7:0] rx_byte;
+wire       rx_valid;
+wire [5:0] ext_hh;
+wire [5:0] ext_mm;
+wire       ext_set_pulse;
+
+uart_rx #(
+  .CLK_HZ(100_000_000),
+  .BAUD(115200)
+) u_uart_rx (
+  .clk(clk),
+  .rst(1'b0),
+  .rx(uart_rx_pin),
+  .data(rx_byte),
+  .valid(rx_valid)
+);
+
+time_uart_parser u_time_parse (
+  .clk(clk),
+  .rst(1'b0),
+  .rx_byte(rx_byte),
+  .rx_valid(rx_valid),
+  .hh(ext_hh),
+  .mm(ext_mm),
+  .time_valid_pulse(ext_set_pulse)
+);
+
+// ---- LD output: merge alert + debug, ONLY ONE assign to LD ----
+wire [15:0] ld_alert_bus = {16{led_alert}};
+
+assign LD = { ld_alert_bus[15:2],
+              ext_set_pulse,  // LD[1]
+              rx_valid        // LD[0]
+            };
+
+
 
 endmodule

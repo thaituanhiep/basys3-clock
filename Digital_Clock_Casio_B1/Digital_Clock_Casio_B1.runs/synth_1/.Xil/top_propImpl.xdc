@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:{E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc} rfile:../../../Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc rfile:../../../Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc id:1} [current_design]
 set_property src_info {type:XDC file:1 line:4 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN W5 [get_ports clk]
 set_property src_info {type:XDC file:1 line:11 export:INPUT save:INPUT read:READ} [current_design]
@@ -65,3 +65,5 @@ set_property src_info {type:XDC file:1 line:61 export:INPUT save:INPUT read:READ
 set_property PACKAGE_PIN P1  [get_ports {LD[14]}]
 set_property src_info {type:XDC file:1 line:62 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN L1  [get_ports {LD[15]}]
+set_property src_info {type:XDC file:1 line:66 export:INPUT save:INPUT read:READ} [current_design]
+set_property PACKAGE_PIN J1 [get_ports {uart_rx_pin}]

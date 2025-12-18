@@ -25,7 +25,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.runs/impl_1'
+HD_PWD='C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.runs/impl_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log
@@ -42,7 +42,7 @@ EAStep()
 }
 
 # pre-commands:
-/bin/touch .init_design.begin.rst
+/bin/touch .write_bitstream.begin.rst
 EAStep vivado -log top.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source top.tcl -notrace
 
 

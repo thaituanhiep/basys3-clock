@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.runs/synth_1/top.tcl"
+  variable script "C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.runs/synth_1/top.tcl"
   variable category "vivado_synth"
 }
 
@@ -56,33 +56,36 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 2
+set_param chipscope.maxJobs 3
 set_param general.usePosixSpawnForFork 1
+set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
 
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.cache/wt} [current_project]
-set_property parent.project_path {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.xpr} [current_project]
+set_property webtalk.parent_dir C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.cache/wt [current_project]
+set_property parent.project_path C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_output_repo {e:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.cache/ip} [current_project]
+set_property ip_output_repo c:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
-  {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/DigitalClock.v}
-  {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/ModeFSM.v}
-  {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/alarm.v}
-  {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/blink_gen.v}
-  {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/clock_1hz.v}
-  {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/countdown_timer.v}
-  {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/debounce.v}
-  {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/sevseg.v}
-  {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/stopwatch.v}
-  {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v}
+  C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/DigitalClock.v
+  C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/ModeFSM.v
+  C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/alarm.v
+  C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/blink_gen.v
+  C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/clock_1hz.v
+  C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/countdown_timer.v
+  C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/debounce.v
+  C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/sevseg.v
+  C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/stopwatch.v
+  C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/time_uart_parser.v
+  C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/uart_rx.v
+  C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -93,12 +96,12 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc {{E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc}}
-set_property used_in_implementation false [get_files {{E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc}}]
+read_xdc C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc
+set_property used_in_implementation false [get_files C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/constrs_1/new/Basy3_constraints.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
 
-read_checkpoint -auto_incremental -incremental {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/utils_1/imports/synth_1/top.dcp}
+read_checkpoint -auto_incremental -incremental C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/utils_1/imports/synth_1/top.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

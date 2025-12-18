@@ -62,3 +62,6 @@ set_property PACKAGE_PIN P1  [get_ports {LD[14]}]
 set_property PACKAGE_PIN L1  [get_ports {LD[15]}]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {LD[*]}]
+
+set_property PACKAGE_PIN J1 [get_ports {uart_rx_pin}]
+set_property IOSTANDARD LVCMOS33 [get_ports {uart_rx_pin}]

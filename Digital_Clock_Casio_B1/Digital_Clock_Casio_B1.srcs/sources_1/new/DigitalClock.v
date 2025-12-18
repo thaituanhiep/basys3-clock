@@ -9,6 +9,11 @@ module DigitalClock (
     input wire btn_down_pulse,
 
     input wire blink,
+    
+    input  wire [5:0] ext_hh,
+input  wire [5:0] ext_mm,
+input  wire       ext_set_pulse,
+
 
     output reg [3:0] digit0,  // min ones
     output reg [3:0] digit1,  // min tens
@@ -27,30 +32,42 @@ module DigitalClock (
   // CLOCK RUN (LUÔN CHẠY)
   // =========================
   always @(posedge clk) begin
-    if (tick_1hz && !set_min_mode && !set_hour_mode) begin
-      if (sec == 59) begin
-        sec <= 0;
-        if (minute == 59) begin
-          minute <= 0;
-          hour   <= (hour == 23) ? 0 : hour + 1;
+
+    // ===== (1) ƯU TIÊN CAO NHẤT: ESP32 set giờ/phút =====
+    // Khi ext_set_pulse lên 1, cập nhật time ngay lập tức.
+    if (ext_set_pulse) begin
+      // chốt đúng range (parser đã check rồi nhưng thêm guard cho chắc)
+      if (ext_hh <= 23) hour   <= ext_hh[4:0];
+      if (ext_mm <= 59) minute <= ext_mm;
+      sec <= 0; // reset giây để đồng bộ đẹp (tuỳ chọn nhưng nên có)
+    end
+    else begin
+      // ===== (2) Chạy clock bình thường khi KHÔNG ở chế độ set =====
+      if (tick_1hz && !set_min_mode && !set_hour_mode) begin
+        if (sec == 59) begin
+          sec <= 0;
+          if (minute == 59) begin
+            minute <= 0;
+            hour   <= (hour == 23) ? 0 : hour + 1;
+          end else begin
+            minute <= minute + 1;
+          end
         end else begin
-          minute <= minute + 1;
+          sec <= sec + 1;
         end
-      end else begin
-        sec <= sec + 1;
       end
-    end
 
-    // -------- SET MIN --------
-    if (set_min_mode) begin
-      if (btn_up_pulse) minute <= (minute == 59) ? 0 : minute + 1;
-      if (btn_down_pulse) minute <= (minute == 0) ? 59 : minute - 1;
-    end
+      // ===== (3) SET MIN =====
+      if (set_min_mode) begin
+        if (btn_up_pulse)   minute <= (minute == 59) ? 0  : minute + 1;
+        if (btn_down_pulse) minute <= (minute == 0)  ? 59 : minute - 1;
+      end
 
-    // -------- SET HOUR --------
-    if (set_hour_mode) begin
-      if (btn_up_pulse) hour <= (hour == 23) ? 0 : hour + 1;
-      if (btn_down_pulse) hour <= (hour == 0) ? 23 : hour - 1;
+      // ===== (4) SET HOUR =====
+      if (set_hour_mode) begin
+        if (btn_up_pulse)   hour <= (hour == 23) ? 0  : hour + 1;
+        if (btn_down_pulse) hour <= (hour == 0)  ? 23 : hour - 1;
+      end
     end
   end
 
@@ -73,5 +90,6 @@ module DigitalClock (
       digit3 = 4'hF;
     end
   end
+
 
 endmodule
