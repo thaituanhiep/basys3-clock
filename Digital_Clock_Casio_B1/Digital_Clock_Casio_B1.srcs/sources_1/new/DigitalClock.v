@@ -18,7 +18,11 @@ input  wire       ext_set_pulse,
     output reg [3:0] digit0,  // min ones
     output reg [3:0] digit1,  // min tens
     output reg [3:0] digit2,  // hour ones
-    output reg [3:0] digit3   // hour tens
+    output reg [3:0] digit3,  // hour tens
+
+    // expose current time for alarm/other blocks
+    output wire [4:0] cur_hour,
+    output wire [5:0] cur_min
 );
 
   // =========================
@@ -27,6 +31,12 @@ input  wire       ext_set_pulse,
   reg [5:0] sec = 0;
   reg [5:0] minute = 34;  // default 12:34
   reg [4:0] hour = 12;
+
+  assign cur_hour = hour;
+  assign cur_min  = minute;
+
+  assign cur_hour = hour;
+  assign cur_min  = minute;
 
   // =========================
   // CLOCK RUN (LUÔN CHẠY)

@@ -28,8 +28,7 @@ static const int UART_RX_PIN = 18;  // Basys3 TX -> ESP32 (optional)
 HardwareSerial& UartToBasys = Serial1;
 
 // ================== APP ==================
-// Gửi mỗi khi PHÚT thay đổi (đỡ spam log)
-int lastSentMinute = -1;
+// Basys3 gửi 1 byte 'G' (Get time) -> ESP32 trả về packet: "T%02d%02d\n"
 
 bool syncTimeOnce()
 {
@@ -104,7 +103,7 @@ void connectWiFi()
   Serial.println(WiFi.RSSI());
 }
 
-void sendHHMMToBasysIfMinuteChanged()
+void sendHHMMToBasysNow()
 {
   struct tm timeinfo;
   if (!getLocalTime(&timeinfo, 50)) {
@@ -118,10 +117,6 @@ void sendHHMMToBasysIfMinuteChanged()
     syncTimeOnce();
     return;
   }
-
-  // Chỉ gửi khi phút đổi
-  if (timeinfo.tm_min == lastSentMinute) return;
-  lastSentMinute = timeinfo.tm_min;
 
   int hh = timeinfo.tm_hour;
   int mm = timeinfo.tm_min;
@@ -163,13 +158,16 @@ void loop()
     syncTimeOnce();
   }
 
-  sendHHMMToBasysIfMinuteChanged();
-
-  // (Tuỳ chọn) đọc dữ liệu từ Basys3 nếu bạn cần
+  // Chỉ gửi giờ khi Basys3 yêu cầu
   while (UartToBasys.available()) {
     int c = UartToBasys.read();
     Serial.printf("[UART] RX <- BASYS3: 0x%02X '%c'\n",
                   (unsigned)c, (c >= 32 && c <= 126) ? c : '.');
+
+    if (c == 'G') {
+      // (Tuỳ chọn) đồng bộ lại nếu lâu quá hoặc vừa mất WiFi
+      sendHHMMToBasysNow();
+    }
   }
 
   delay(20);
