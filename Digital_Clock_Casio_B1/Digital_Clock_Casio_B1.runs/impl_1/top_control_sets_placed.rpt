@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2025.1 (win64) Build 6140274 Thu May 22 00:12:29 MDT 2025
-| Date         : Thu Dec 18 19:45:11 2025
+| Date         : Tue Dec 23 20:02:00 2025
 | Host         : thaituanhiep running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file top_control_sets_placed.rpt
 | Design       : top
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |    24 |
-|    Minimum number of control sets                        |    24 |
+| Total control sets                                       |    26 |
+|    Minimum number of control sets                        |    26 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    82 |
+| Unused register locations in slices containing registers |    80 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,12 +39,12 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |    24 |
-| >= 0 to < 4        |     2 |
+| Total control sets |    26 |
+| >= 0 to < 4        |     1 |
 | >= 4 to < 6        |     9 |
-| >= 6 to < 8        |     7 |
+| >= 6 to < 8        |     9 |
 | >= 8 to < 10       |     1 |
-| >= 10 to < 12      |     0 |
+| >= 10 to < 12      |     1 |
 | >= 12 to < 14      |     2 |
 | >= 14 to < 16      |     0 |
 | >= 16              |     3 |
@@ -58,45 +58,47 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |             146 |           44 |
+| No           | No                    | No                     |             152 |           46 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |              46 |           13 |
-| Yes          | No                    | No                     |              93 |           35 |
+| No           | Yes                   | No                     |              56 |           16 |
+| Yes          | No                    | No                     |             104 |           38 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              25 |            9 |
+| Yes          | Yes                   | No                     |              24 |            9 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 4. Detailed Control Set Information
 -----------------------------------
 
-+----------------+---------------------------------------+-------------------------------+------------------+----------------+--------------+
-|  Clock Signal  |             Enable Signal             |        Set/Reset Signal       | Slice Load Count | Bel Load Count | Bels / Slice |
-+----------------+---------------------------------------+-------------------------------+------------------+----------------+--------------+
-|  clk_IBUF_BUFG | u_fsm/btn_pulse_reg_2                 | u_fsm/alarm_min_reg_reg[4]    |                1 |              1 |         1.00 |
-|  clk_IBUF_BUFG | u_fsm/btn_pulse_reg_2                 |                               |                1 |              3 |         3.00 |
-|  clk_IBUF_BUFG | u_time_parse/m1[3]_i_1_n_0            |                               |                1 |              4 |         4.00 |
-|  clk_IBUF_BUFG | u_time_parse/m2[3]_i_1_n_0            |                               |                1 |              4 |         4.00 |
-|  clk_IBUF_BUFG | u_time_parse/h2[3]_i_1_n_0            |                               |                1 |              4 |         4.00 |
-|  clk_IBUF_BUFG | u_time_parse/h1[3]_i_1_n_0            |                               |                1 |              4 |         4.00 |
-|  clk_IBUF_BUFG | u_uart_rx/clk_cnt                     |                               |                3 |              4 |         1.33 |
-|  clk_IBUF_BUFG | u_fsm/btn_pulse_reg_3[0]              |                               |                2 |              5 |         2.50 |
-|  clk_IBUF_BUFG | u_tick/alarm_alert_counter0           |                               |                2 |              5 |         2.50 |
-|  clk_IBUF_BUFG | u_time_parse/hh_reg[3]_0[0]           |                               |                3 |              5 |         1.67 |
-|  clk_IBUF_BUFG | u_uart_rx/FSM_onehot_state[4]_i_1_n_0 |                               |                1 |              5 |         5.00 |
-|  clk_IBUF_BUFG | u_fsm/mode_reg[1]_4                   | u_fsm/btn_pulse_reg_4         |                2 |              6 |         3.00 |
-|  clk_IBUF_BUFG | u_fsm/E[0]                            | u_time_parse/LD_OBUF[0]       |                2 |              6 |         3.00 |
-|  clk_IBUF_BUFG | u_fsm/mode_reg[1]_5[0]                | u_stopwatch/sec[5]_i_1__1_n_0 |                2 |              6 |         3.00 |
-|  clk_IBUF_BUFG | u_countdown/min[5]_i_1_n_0            |                               |                3 |              6 |         2.00 |
-|  clk_IBUF_BUFG | u_countdown/sec[5]_i_1__0_n_0         |                               |                5 |              6 |         1.20 |
-|  clk_IBUF_BUFG | u_time_parse/mm_reg[2]_0[0]           |                               |                3 |              6 |         2.00 |
-|  clk_IBUF_BUFG | u_uart_rx/clk_cnt                     | u_uart_rx/clk_cnt[8]_i_1_n_0  |                2 |              6 |         3.00 |
-|  clk_IBUF_BUFG | u_uart_rx/data[7]_i_1_n_0             |                               |                2 |              8 |         4.00 |
-|  clk_IBUF_BUFG | u_time_parse/hh[5]_i_1_n_0            |                               |                2 |             12 |         6.00 |
-|  clk_IBUF_BUFG | u_fsm/mode_reg[1]_3[0]                |                               |                4 |             12 |         3.00 |
-|  clk_IBUF_BUFG |                                       | u_seg/clear                   |                5 |             19 |         3.80 |
-|  clk_IBUF_BUFG |                                       | u_tick/counter[26]_i_1_n_0    |                8 |             27 |         3.38 |
-|  clk_IBUF_BUFG |                                       |                               |               44 |            146 |         3.32 |
-+----------------+---------------------------------------+-------------------------------+------------------+----------------+--------------+
++----------------+---------------------------------------+---------------------------------+------------------+----------------+--------------+
+|  Clock Signal  |             Enable Signal             |         Set/Reset Signal        | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+---------------------------------------+---------------------------------+------------------+----------------+--------------+
+|  clk_IBUF_BUFG | u_uart_tx/tx_i_1_n_0                  |                                 |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG | u_time_parse/m2[3]_i_1_n_0            |                                 |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_time_parse/m1[3]_i_1_n_0            |                                 |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_time_parse/h2[3]_i_1_n_0            |                                 |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_time_parse/h1[3]_i_1_n_0            |                                 |                1 |              4 |         4.00 |
+|  clk_IBUF_BUFG | u_uart_rx/clk_cnt                     |                                 |                4 |              4 |         1.00 |
+|  clk_IBUF_BUFG | u_fsm/btn_pulse_reg_3[0]              |                                 |                2 |              5 |         2.50 |
+|  clk_IBUF_BUFG | u_time_parse/hh_reg[3]_0[0]           |                                 |                3 |              5 |         1.67 |
+|  clk_IBUF_BUFG | u_uart_rx/FSM_onehot_state[4]_i_1_n_0 |                                 |                1 |              5 |         5.00 |
+|  clk_IBUF_BUFG | u_tick/alarm_alert_counter0           |                                 |                2 |              5 |         2.50 |
+|  clk_IBUF_BUFG | u_fsm/btn_pulse_reg_2[0]              |                                 |                2 |              6 |         3.00 |
+|  clk_IBUF_BUFG | u_fsm/mode_reg[1]_2                   | u_fsm/btn_pulse_reg_4           |                2 |              6 |         3.00 |
+|  clk_IBUF_BUFG | u_fsm/mode_reg[1]_3[0]                | u_stopwatch/sec[5]_i_1__0_n_0   |                2 |              6 |         3.00 |
+|  clk_IBUF_BUFG | u_fsm/tick_1hz_reg[0]                 | u_time_parse/LD_OBUF[0]         |                2 |              6 |         3.00 |
+|  clk_IBUF_BUFG | u_countdown/min[5]_i_1_n_0            |                                 |                2 |              6 |         3.00 |
+|  clk_IBUF_BUFG | u_countdown/sec[5]_i_1_n_0            |                                 |                4 |              6 |         1.50 |
+|  clk_IBUF_BUFG | u_time_parse/E[0]                     |                                 |                3 |              6 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_rx/clk_cnt                     | u_uart_rx/clk_cnt[8]_i_1__0_n_0 |                3 |              6 |         2.00 |
+|  clk_IBUF_BUFG | u_uart_tx/shreg[6]_i_1_n_0            |                                 |                1 |              7 |         7.00 |
+|  clk_IBUF_BUFG | u_uart_rx/data[7]_i_1_n_0             |                                 |                1 |              8 |         8.00 |
+|  clk_IBUF_BUFG |                                       | u_uart_tx/clk_cnt[10]_i_1_n_0   |                4 |             10 |         2.50 |
+|  clk_IBUF_BUFG | u_fsm/E[0]                            |                                 |                4 |             12 |         3.00 |
+|  clk_IBUF_BUFG | u_time_parse/hh[5]_i_1_n_0            |                                 |                4 |             12 |         3.00 |
+|  clk_IBUF_BUFG |                                       | u_seg/clear                     |                5 |             19 |         3.80 |
+|  clk_IBUF_BUFG |                                       | u_tick/counter[26]_i_1_n_0      |                7 |             27 |         3.86 |
+|  clk_IBUF_BUFG |                                       |                                 |               46 |            152 |         3.30 |
++----------------+---------------------------------------+---------------------------------+------------------+----------------+--------------+
 
 

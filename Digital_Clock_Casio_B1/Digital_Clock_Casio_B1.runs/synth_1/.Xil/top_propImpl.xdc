@@ -67,3 +67,5 @@ set_property src_info {type:XDC file:1 line:62 export:INPUT save:INPUT read:READ
 set_property PACKAGE_PIN L1  [get_ports {LD[15]}]
 set_property src_info {type:XDC file:1 line:66 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN J1 [get_ports {uart_rx_pin}]
+set_property src_info {type:XDC file:1 line:71 export:INPUT save:INPUT read:READ} [current_design]
+set_property PACKAGE_PIN L2 [get_ports {uart_tx_pin}]

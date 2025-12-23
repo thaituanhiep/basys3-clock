@@ -1,75 +1,30 @@
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="14100" HostCore="12" HostMemory="033980129280">
+    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="7364" HostCore="12" HostMemory="033980129280">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="17652" HostCore="12" HostMemory="033980129280">
+    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="21180" HostCore="12" HostMemory="033980129280">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="6060" HostCore="12" HostMemory="033980129280">
+    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="14380" HostCore="12" HostMemory="033980129280">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="9352" HostCore="12" HostMemory="033980129280">
+    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="12076" HostCore="12" HostMemory="033980129280">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="4944" HostCore="12" HostMemory="033980129280">
+    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="18976" HostCore="12" HostMemory="033980129280">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="17332" HostCore="12" HostMemory="033980129280">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="9764" HostCore="12" HostMemory="033980129280">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="9864" HostCore="12" HostMemory="033980129280">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="1956" HostCore="12" HostMemory="033980129280">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="9892" HostCore="12" HostMemory="033980129280">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="2180" HostCore="12" HostMemory="033980129280">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="7988" HostCore="12" HostMemory="033980129280">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="11652" HostCore="12" HostMemory="033980129280">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="10088" HostCore="12" HostMemory="033980129280">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="11368" HostCore="12" HostMemory="033980129280">
+    <Process Command="vivado.bat" Owner="thait" Host="THAITUANHIEP" Pid="16596" HostCore="12" HostMemory="033980129280">
     </Process>
 </ProcessHandle>

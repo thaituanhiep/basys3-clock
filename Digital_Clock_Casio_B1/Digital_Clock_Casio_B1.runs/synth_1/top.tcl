@@ -85,6 +85,7 @@ read_verilog -library xil_defaultlib {
   C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/stopwatch.v
   C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/time_uart_parser.v
   C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/uart_rx.v
+  C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/uart_tx.v
   C:/Users/thait/Desktop/basys3-clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/top.v
 }
 OPTRACE "Adding files" END { }
