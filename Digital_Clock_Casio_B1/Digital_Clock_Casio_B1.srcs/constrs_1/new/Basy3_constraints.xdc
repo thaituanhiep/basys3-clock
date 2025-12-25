@@ -75,3 +75,11 @@ set_property IOSTANDARD LVCMOS33 [get_ports {LD[*]}]
 ############################################################
 set_property PACKAGE_PIN A14 [get_ports BUZZER]
 set_property IOSTANDARD LVCMOS33 [get_ports BUZZER]
+
+set_property PACKAGE_PIN J1 [get_ports {uart_rx_pin}]
+set_property IOSTANDARD LVCMOS33 [get_ports {uart_rx_pin}]
+
+# Basys3 -> ESP32 (TX). Default map to JA2 (PACKAGE_PIN J2).
+# If bạn cắm khác chân, chỉ cần sửa PACKAGE_PIN ở đây.
+set_property PACKAGE_PIN L2 [get_ports {uart_tx_pin}]
+set_property IOSTANDARD LVCMOS33 [get_ports {uart_tx_pin}]

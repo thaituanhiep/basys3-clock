@@ -9,6 +9,10 @@ module DigitalClock (
     input wire btn_down_pulse,
 
     input wire blink,
+    
+        input  wire [5:0] ext_hh,
+input  wire [5:0] ext_mm,
+input  wire       ext_set_pulse,
 
     output reg [3:0] digit0,  // min ones
     output reg [3:0] digit1,  // min tens
@@ -16,7 +20,11 @@ module DigitalClock (
     output reg [3:0] digit3,  // hour tens
 
     output wire [4:0] hour,
-    output wire [5:0] min
+    output wire [5:0] min,
+    
+        // expose current time for alarm/other blocks
+    output wire [4:0] cur_hour,
+    output wire [5:0] cur_min
 );
 
   // =========================
@@ -29,11 +37,27 @@ module DigitalClock (
   // expose ra ngoài
   assign hour = hour_r;
   assign min  = minute;
+  
+    assign cur_hour = hour;
+  assign cur_min  = minute;
+
+  assign cur_hour = hour;
+  assign cur_min  = minute;
 
   // =========================
   // CLOCK RUN
   // =========================
   always @(posedge clk) begin
+  // ===== (1) ƯU TIÊN CAO NHẤT: ESP32 set giờ/phút =====
+    // Khi ext_set_pulse lên 1, cập nhật time ngay lập tức.
+    if (ext_set_pulse) begin
+      // chốt đúng range (parser đã check rồi nhưng thêm guard cho chắc)
+      if (ext_hh <= 23) hour_r    <= ext_hh[4:0];
+      if (ext_mm <= 59) minute <= ext_mm;
+      sec <= 0; // reset giây để đồng bộ đẹp (tuỳ chọn nhưng nên có)
+    end
+    else begin
+      // ===== (2) Chạy clock bình thường khi KHÔNG ở chế độ set =====
     if (tick_1hz && !set_min_mode && !set_hour_mode) begin
       if (sec == 59) begin
         sec <= 0;
@@ -59,6 +83,7 @@ module DigitalClock (
       if (btn_up_pulse) hour_r <= (hour_r == 23) ? 0 : hour_r + 1;
       if (btn_down_pulse) hour_r <= (hour_r == 0) ? 23 : hour_r - 1;
     end
+  end
   end
 
   // =========================

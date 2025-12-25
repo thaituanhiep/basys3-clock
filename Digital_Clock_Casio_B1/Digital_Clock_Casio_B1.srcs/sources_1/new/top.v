@@ -7,6 +7,8 @@ module top (
     input wire IO_BTN_U,
     input wire IO_BTN_D,
     input wire IO_BTN_C,
+    input wire uart_rx_pin,
+    output wire uart_tx_pin,
 
     // 7-seg
     output wire [3:0] IO_SSEG_SEL,
@@ -94,6 +96,9 @@ module top (
       .digit1(dc_d1),
       .digit2(dc_d2),
       .digit3(dc_d3),
+      .ext_hh(ext_hh),
+      .ext_mm(ext_mm),
+      .ext_set_pulse(ext_set_pulse),
       .hour(dc_hour),
       .min(dc_min)
   );
@@ -242,6 +247,61 @@ module top (
       .IO_SSEG(IO_SSEG),
       .IO_SSEG_DP(IO_SSEG_DP)
   );
+
+// =====================================================
+// UART TX (Basys3 -> ESP32): send 'G' when BTNC pressed in CLOCK mode
+// =====================================================
+wire       tx_busy;
+reg        tx_start;
+reg [7:0]  tx_data;
+
+// Create 1-cycle pulse request when: mode == CLOCK (0) and center button pulse
+always @(posedge clk) begin
+  tx_start <= 1'b0;
+  if (!tx_busy && c_p && (mode == 3'd0)) begin
+    tx_start <= 1'b1;
+    tx_data  <= 8'h47; // 'G'
+  end
+end
+
+uart_tx #(
+  .CLK_HZ(100_000_000),
+  .BAUD(115200)
+) u_uart_tx (
+  .clk(clk),
+  .rst(1'b0),
+  .tx_start(tx_start),
+  .tx_data(tx_data),
+  .tx_busy(tx_busy),
+  .tx(uart_tx_pin)
+);
+
+wire [7:0] rx_byte;
+wire       rx_valid;
+wire [5:0] ext_hh;
+wire [5:0] ext_mm;
+wire       ext_set_pulse;
+
+uart_rx #(
+  .CLK_HZ(100_000_000),
+  .BAUD(115200)
+) u_uart_rx (
+  .clk(clk),
+  .rst(1'b0),
+  .rx(uart_rx_pin),
+  .data(rx_byte),
+  .valid(rx_valid)
+);
+
+time_uart_parser u_time_parse (
+  .clk(clk),
+  .rst(1'b0),
+  .rx_byte(rx_byte),
+  .rx_valid(rx_valid),
+  .hh(ext_hh),
+  .mm(ext_mm),
+  .time_valid_pulse(ext_set_pulse)
+);
 
   // =====================================================
   // COLON BLINK
