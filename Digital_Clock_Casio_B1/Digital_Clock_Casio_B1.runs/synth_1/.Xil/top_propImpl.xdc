@@ -67,3 +67,5 @@ set_property src_info {type:XDC file:1 line:68 export:INPUT save:INPUT read:READ
 set_property PACKAGE_PIN P1  [get_ports {LD[14]}]
 set_property src_info {type:XDC file:1 line:69 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN L1  [get_ports {LD[15]}]
+set_property src_info {type:XDC file:1 line:76 export:INPUT save:INPUT read:READ} [current_design]
+set_property PACKAGE_PIN A14 [get_ports BUZZER]

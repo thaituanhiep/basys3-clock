@@ -69,3 +69,9 @@ set_property PACKAGE_PIN P1  [get_ports {LD[14]}]
 set_property PACKAGE_PIN L1  [get_ports {LD[15]}]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {LD[*]}]
+
+############################################################
+## BUZZER - PMOD JB1
+############################################################
+set_property PACKAGE_PIN A14 [get_ports BUZZER]
+set_property IOSTANDARD LVCMOS33 [get_ports BUZZER]

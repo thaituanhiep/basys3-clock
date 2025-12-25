@@ -56,7 +56,6 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 2
 set_param general.usePosixSpawnForFork 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a35tcpg236-1
@@ -76,6 +75,7 @@ read_verilog -library xil_defaultlib {
   {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/DigitalClock.v}
   {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/ModeFSM.v}
   {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/alarm.v}
+  {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/alert_ctrl.v}
   {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/blink_gen.v}
   {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/clock_1hz.v}
   {E:/aa. Data FF/zzz.Project_Sem2_Digital_Clock/Digital_Clock_Casio_B1/Digital_Clock_Casio_B1.srcs/sources_1/new/countdown_timer.v}

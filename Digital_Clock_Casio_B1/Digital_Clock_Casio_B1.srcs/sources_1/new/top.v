@@ -14,7 +14,10 @@ module top (
     output wire       IO_SSEG_DP,
 
     // LEDs
-    output wire [15:0] LD
+    output wire [15:0] LD,
+    
+    // BUZZER
+    output wire BUZZER
 );
 
   // =====================================================
@@ -53,13 +56,23 @@ module top (
   );
 
   // =====================================================
-  // BLINK
+  // BLINK (UI)
   // =====================================================
   wire blink;
   blink_gen u_blink (
       .clk(clk),
       .enable(mode != 3'd0),
       .blink(blink)
+  );
+
+  // =====================================================
+  // BLINK FOR ALERT (ALWAYS ON)
+  // =====================================================
+  wire blink_alert;
+  blink_gen u_blink_alert (
+      .clk(clk),
+      .enable(1'b1),
+      .blink(blink_alert)
   );
 
   // =====================================================
@@ -86,30 +99,26 @@ module top (
   );
 
   // =====================================================
-  // SECOND COUNTER (FOR DISPLAY ONLY)
+  // SECOND COUNTER (DISPLAY ONLY)
   // =====================================================
   reg [5:0] sec_cnt;
-
   always @(posedge clk) begin
-    if (tick_1hz) begin
-      if (sec_cnt == 59) sec_cnt <= 0;
-      else sec_cnt <= sec_cnt + 1;
-    end
+    if (tick_1hz)
+      sec_cnt <= (sec_cnt == 59) ? 0 : sec_cnt + 1;
   end
 
   wire [3:0] sec_ones = sec_cnt % 10;
   wire [3:0] sec_tens = sec_cnt / 10;
 
   // =====================================================
-  // DISPLAY TOGGLE (HH:MM <-> SS)
+  // DISPLAY TOGGLE
   // =====================================================
   reg show_seconds;
-
   always @(posedge clk) begin
     if (mode != 3'd0)
-      show_seconds <= 1'b0;              // reset khi ra khỏi mode 0
+      show_seconds <= 1'b0;
     else if (r_p)
-      show_seconds <= ~show_seconds;     // toggle khi nhấn BTNR
+      show_seconds <= ~show_seconds;
   end
 
   // =====================================================
@@ -165,11 +174,6 @@ module top (
       .alarm_min_out(alarm_min)
   );
 
-  wire [3:0] al_onoff_d0, al_onoff_d1, al_onoff_d2, al_onoff_d3;
-  assign {al_onoff_d3, al_onoff_d2, al_onoff_d1, al_onoff_d0} =
-         alarm_enable_disp ? {4'hF,4'hF,4'hF,4'h1}
-                           : {4'hF,4'hF,4'hF,4'h0};
-
   // =====================================================
   // COUNTDOWN
   // =====================================================
@@ -184,7 +188,6 @@ module top (
       .btn_down_pulse(d_p),
       .btn_right_pulse(r_p),
       .btn_center_pulse(c_p),
-
       .blink(blink),
       .running(cd_running),
       .finished(cd_finished),
@@ -198,7 +201,6 @@ module top (
   // STOPWATCH
   // =====================================================
   wire [3:0] sw_d0, sw_d1, sw_d2, sw_d3;
-  wire sw_running;
 
   stopwatch u_stopwatch (
       .clk(clk),
@@ -206,7 +208,6 @@ module top (
       .sw_enable(mode == 3'd5),
       .btn_start(r_p),
       .btn_reset(c_p),
-      .running(sw_running),
       .d0(sw_d0),
       .d1(sw_d1),
       .d2(sw_d2),
@@ -219,16 +220,14 @@ module top (
   wire [3:0] d0, d1, d2, d3;
 
   assign {d3,d2,d1,d0} =
-      (mode == 3'd0) ?
-        (show_seconds ? {4'hF,4'hF,sec_tens,sec_ones}
-                      : {dc_d3,dc_d2,dc_d1,dc_d0}) :
+      (mode == 3'd0) ? (show_seconds ? {4'hF,4'hF,sec_tens,sec_ones}
+                                     : {dc_d3,dc_d2,dc_d1,dc_d0}) :
       (mode == 3'd1) ? {dc_d3,dc_d2,dc_d1,dc_d0} :
       (mode == 3'd2) ? {al_d3,al_d2,al_d1,al_d0} :
-      (mode == 3'd3) ? {al_onoff_d3,al_onoff_d2,al_onoff_d1,al_onoff_d0} :
+      (mode == 3'd3) ? {4'hF,4'hF,4'hF, alarm_enable_disp ? 4'h1 : 4'h0} :
       (mode == 3'd4) ? {cd_d3,cd_d2,cd_d1,cd_d0} :
       (mode == 3'd5) ? {sw_d3,sw_d2,sw_d1,sw_d0} :
                        16'd0;
-
 
   // =====================================================
   // SEVEN SEG
@@ -243,51 +242,50 @@ module top (
       .IO_SSEG(IO_SSEG),
       .IO_SSEG_DP(IO_SSEG_DP)
   );
-  
-    // =====================================================
-    // COLON BLINK (1Hz, only for Digital Clock)
-    // =====================================================
-    reg colon_state;
-    assign IO_SSEG_DP = colon_state;
-    
-    always @(posedge clk) begin
-      if (mode != 3'd0 || show_seconds)
-        colon_state <= 1'b0;          // tắt ':' khi không ở HH:MM
-      else if (tick_1hz)
-        colon_state <= ~colon_state;  // nháy theo giây
-    end
-      
-  
-  
-    // =====================================================
-    // LED STATUS
-    // =====================================================
-    
-    // Mode indicator LD0-LD5
-    wire [15:0] led_mode;
-    assign led_mode = (mode <= 3'd5) ? (16'b1 << mode) : 16'b0;
-    
-    // Alarm enable LD6
-    wire [15:0] led_alarm_status;
-    assign led_alarm_status = alarm_enable ? (16'b1 << 6) : 16'b0;
-    
-    // Alert LD10-LD15 nhấp nháy
-    wire [15:0] led_alert;
-    assign led_alert =
-    // Alarm: chỉ nháy ở mode 0 (Digital Clock)
-    ((mode == 3'd0) && alarm_match && blink) ||
 
-    // Countdown finished: chỉ nháy ở mode 4 (Countdown)
-    ((mode == 3'd4) && cd_finished && blink)
-    ? (16'b111111 << 10)
-    : 16'b0;
+  // =====================================================
+  // COLON BLINK
+  // =====================================================
+  reg colon_state;
+  assign IO_SSEG_DP = colon_state;
 
-    
-    // LD7-LD9 OFF (giữ 0)
-    wire [15:0] led_reserved = 16'b0;
-    
-    // Combine tất cả LED
-    assign LD = led_mode | led_alarm_status | led_alert | led_reserved;
-    
+  always @(posedge clk) begin
+    if (mode != 3'd0 || show_seconds)
+      colon_state <= 1'b0;
+    else if (tick_1hz)
+      colon_state <= ~colon_state;
+  end
+
+  // =====================================================
+  // LED STATUS
+  // =====================================================
+  wire [15:0] led_mode = (mode <= 3'd5) ? (16'b1 << mode) : 16'b0;
+  wire [15:0] led_alarm_status = alarm_enable ? (16'b1 << 6) : 16'b0;
+
+  // =====================================================
+  // ALERT CONTROLLER  <<< FIX ALERT
+  // =====================================================
+  wire buzzer_en;
+  wire [15:0] led_alert;
+
+  alert_ctrl u_alert (
+      .clk(clk),
+      .rst(1'b0),
+      .tick_1hz(tick_1hz),
+      .blink_1hz(blink_alert),
+      .alarm_match(alarm_match),
+      .cd_finished(cd_finished),
+      .btnu_pulse(u_p),     // <<< FIX
+      .btnd_pulse(d_p),     // <<< FIX
+      .buzzer_en(buzzer_en),
+      .led_alert(led_alert)
+  );
+
+  assign BUZZER = buzzer_en;
+
+  // =====================================================
+  // LED COMBINE
+  // =====================================================
+  assign LD = led_mode | led_alarm_status | led_alert;
 
 endmodule
