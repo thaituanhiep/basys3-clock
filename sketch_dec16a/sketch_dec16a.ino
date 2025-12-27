@@ -1,186 +1,263 @@
+/*
+  ESP32-S3 (BLE) -> Basys3 UART Remote Buttons + Online Time
+
+  Behavior:
+    - On boot: sync time ONCE to Basys3:  T HH MM \n
+    - Later: ONLY sync again when Basys3 sends 'G' over UART
+            (Basys3 sends 'G' when BTNC is pressed in CLOCK mode)
+
+  BLE Remote Buttons:
+    - BLE NUS (Nordic UART Service style)
+    - Send characters: L R U D C (upper/lower ok)
+    - ESP32 forwards to FPGA as: B<code>\n  (e.g., "BL\n")
+
+  Notes:
+    - ESP32-S3 supports BLE (not Classic SPP).
+*/
+
 #include <WiFi.h>
 #include <time.h>
 
-// ================== WIFI ==================
-const char* WIFI_SSID = "iQOO Neo9";
-const char* WIFI_PASS = "12345678";
+#include <BLEDevice.h>
+#include <BLEServer.h>
+#include <BLEUtils.h>
+#include <BLE2902.h>
 
-// ================== NTP ==================
-const char* NTP1 = "pool.ntp.org";
-const char* NTP2 = "time.google.com";
+// -------------------- USER CONFIG --------------------
+static const char* WIFI_SSID = "iQOO Neo9";
+static const char* WIFI_PASS = "12345678";
 
-// UTC+7 (VN/Thailand). Không DST.
+// Timezone (Vietnam): UTC+7
 static const long  GMT_OFFSET_SEC      = 7L * 3600L;
 static const int   DAYLIGHT_OFFSET_SEC = 0;
 
-// (Tuỳ chọn) TZ string. Giữ lại để log hiển thị "ICT"
-const char* TZ_INFO = "ICT-7";
+// UART to FPGA
+static const uint32_t FPGA_BAUD = 115200;
 
-// ================== UART to BASYS3 ==================
-static const uint32_t UART_BAUD = 115200;
+// Serial2 pins: CHANGE to match your wiring
+// Example: TX=17 RX=18
+static const int PIN_UART_TX = 17;
+static const int PIN_UART_RX = 18;
 
-// Sửa theo wiring của bạn
-static const int UART_TX_PIN = 17;  // ESP32 -> Basys3 RX
-static const int UART_RX_PIN = 18;  // Basys3 TX -> ESP32 (optional)
+// BLE device name
+static const char* BLE_NAME = "Basys3-Clock-Remote";
+// -----------------------------------------------------
 
-// Serial: log ra Arduino IDE
-// Serial1: UART sang Basys3
-HardwareSerial& UartToBasys = Serial1;
+// Nordic UART Service UUIDs
+static BLEUUID UART_SERVICE_UUID("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
+static BLEUUID UART_RX_UUID     ("6E400002-B5A3-F393-E0A9-E50E24DCCA9E"); // Write
+static BLEUUID UART_TX_UUID     ("6E400003-B5A3-F393-E0A9-E50E24DCCA9E"); // Notify
 
-// ================== APP ==================
-// Basys3 gửi 1 byte 'G' (Get time) -> ESP32 trả về packet: "T%02d%02d\n"
-static bool boot_pushed = false;   // ✅ chỉ push 1 lần khi ESP32 khởi động (sau khi sync được time)
+static BLECharacteristic* g_txChar = nullptr;
+static bool g_deviceConnected = false;
 
-bool syncTimeOnce() {
-  // Set timezone (để getLocalTime() trả đúng local time)
-  setenv("TZ", TZ_INFO, 1);
-  tzset();
-
-  // CÁCH CHẮC ĂN: dùng GMT_OFFSET_SEC (UTC+7) thay vì chỉ dựa vào TZ string
-  configTime(GMT_OFFSET_SEC, DAYLIGHT_OFFSET_SEC, NTP1, NTP2);
-
-  Serial.println("[NTP] Waiting for time sync...");
-  struct tm timeinfo;
-
-  for (int i = 0; i < 40; i++) { // ~40 * 300ms = 12s
-    if (getLocalTime(&timeinfo, 300)) {
-      // Nhiều board trả về timeinfo "rác" khi chưa sync; kiểm tra năm >= 2020
-      if (timeinfo.tm_year < (2020 - 1900)) {
-        Serial.print("!");
-        continue;
-      }
-
-      char localBuf[64];
-      strftime(localBuf, sizeof(localBuf), "%Y-%m-%d %H:%M:%S %Z", &timeinfo);
-
-      // In thêm UTC để bạn so sánh nhanh
-      time_t now = time(nullptr);
-      struct tm utcinfo;
-      gmtime_r(&now, &utcinfo);
-      char utcBuf[64];
-      strftime(utcBuf, sizeof(utcBuf), "%Y-%m-%d %H:%M:%S UTC", &utcinfo);
-
-      Serial.print("[NTP] Synced Local: ");
-      Serial.println(localBuf);
-      Serial.print("[NTP] Synced UTC : ");
-      Serial.println(utcBuf);
-
-      return true;
-    }
-
-    Serial.print(".");
-    delay(300);
-  }
-
-  Serial.println();
-  Serial.println("[NTP] Sync FAILED");
-  return false;
+// -------------------- Helpers --------------------
+static inline bool isCmdChar(char c) {
+  return (c=='L' || c=='R' || c=='U' || c=='D' || c=='C' ||
+          c=='l' || c=='r' || c=='u' || c=='d' || c=='c');
 }
 
-void connectWiFi() {
-  Serial.printf("[WIFI] Connecting to: %s\n", WIFI_SSID);
+static inline char normCmd(char c) {
+  if (c >= 'a' && c <= 'z') return char(c - 'a' + 'A');
+  return c;
+}
 
+static void sendFpgaTimeHHMM(uint8_t hh, uint8_t mm) {
+  char buf[8];
+  // "T" + HH + MM + "\n"  Example: T0937\n
+  snprintf(buf, sizeof(buf), "T%02u%02u\n", (unsigned)hh, (unsigned)mm);
+  Serial2.write((const uint8_t*)buf, strlen(buf));
+}
+
+static void sendFpgaButton(char codeUpper) {
+  // "B" + code + "\n"  Example: BL\n
+  char buf[4];
+  buf[0] = 'B';
+  buf[1] = codeUpper;
+  buf[2] = '\n';
+  buf[3] = 0;
+  Serial2.write((const uint8_t*)buf, 3);
+}
+
+static void bleNotify(const String& s) {
+  if (g_deviceConnected && g_txChar) {
+    g_txChar->setValue(s.c_str());
+    g_txChar->notify();
+  }
+}
+
+// -------------------- WiFi + NTP --------------------
+static void setupWifiAndTime() {
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASS);
 
-  uint8_t retry = 0;
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(400);
-    Serial.print(".");
-    retry++;
+  uint32_t t0 = millis();
+  while (WiFi.status() != WL_CONNECTED && (millis() - t0) < 15000) {
+    delay(200);
+  }
 
-    if (retry >= 40) { // ~16s
-      Serial.println();
-      Serial.println("[WIFI] Connect timeout -> retry WiFi.begin()");
-      WiFi.disconnect(true);
-      delay(300);
-      WiFi.begin(WIFI_SSID, WIFI_PASS);
-      retry = 0;
+  configTime(GMT_OFFSET_SEC, DAYLIGHT_OFFSET_SEC, "pool.ntp.org", "time.nist.gov");
+}
+
+static bool getLocalHHMM(uint8_t &hh, uint8_t &mm) {
+  struct tm timeinfo;
+  if (!getLocalTime(&timeinfo, 2000)) return false;
+  hh = (uint8_t)timeinfo.tm_hour;
+  mm = (uint8_t)timeinfo.tm_min;
+  return true;
+}
+
+// Sync time once (if time is ready)
+static void syncTimeToFpgaOnce() {
+  uint8_t hh, mm;
+  if (getLocalHHMM(hh, mm)) {
+    sendFpgaTimeHHMM(hh, mm);
+
+    String msg = "TIME_SYNC ";
+    msg += String(hh);
+    msg += ":";
+    if (mm < 10) msg += "0";
+    msg += String(mm);
+    msg += "\n";
+
+    bleNotify(msg);
+    Serial.print(msg);
+  } else {
+    bleNotify("Time not ready.\n");
+    Serial.println("Time not ready.");
+  }
+}
+
+// Optional: wait a bit for NTP to become ready, but still sync only once.
+static void syncTimeOnBootWithRetry(uint32_t maxWaitMs = 8000) {
+  uint32_t start = millis();
+  while (millis() - start < maxWaitMs) {
+    uint8_t hh, mm;
+    if (getLocalHHMM(hh, mm)) {
+      sendFpgaTimeHHMM(hh, mm);
+
+      String msg = "TIME_BOOT ";
+      msg += String(hh);
+      msg += ":";
+      if (mm < 10) msg += "0";
+      msg += String(mm);
+      msg += "\n";
+
+      bleNotify(msg);
+      Serial.print(msg);
+      return;
+    }
+    delay(250);
+  }
+
+  // If still not ready, just report (you can press BTNC later to force sync)
+  bleNotify("Time not ready on boot. Press BTNC (CLOCK) later to sync.\n");
+  Serial.println("Time not ready on boot. Press BTNC (CLOCK) later to sync.");
+}
+
+// -------------------- BLE Callbacks --------------------
+class ServerCallbacks : public BLEServerCallbacks {
+  void onConnect(BLEServer* pServer) override {
+    g_deviceConnected = true;
+    bleNotify("Connected. Send L/R/U/D/C.\n");
+  }
+  void onDisconnect(BLEServer* pServer) override {
+    g_deviceConnected = false;
+    BLEDevice::startAdvertising();
+  }
+};
+
+class RxCallbacks : public BLECharacteristicCallbacks {
+  void onWrite(BLECharacteristic* pCharacteristic) override {
+    // FIX: Some ESP32 Arduino BLE implementations return Arduino String here
+    String rx = pCharacteristic->getValue();
+    if (rx.length() == 0) return;
+
+    // Accept any stream; scan for button codes.
+    // You can send "L", or "L\n", or "LRUDC"
+    for (int i = 0; i < rx.length(); i++) {
+      char c = rx[i];
+      if (!isCmdChar(c)) continue;
+      char cmd = normCmd(c);
+
+      sendFpgaButton(cmd);
+
+      // Optional echo back
+      String msg = "BTN ";
+      msg += cmd;
+      msg += "\n";
+      bleNotify(msg);
     }
   }
+};
 
-  Serial.println();
-  Serial.print("[WIFI] Connected. IP: ");
-  Serial.println(WiFi.localIP());
-  Serial.print("[WIFI] RSSI: ");
-  Serial.println(WiFi.RSSI());
+// -------------------- Setup BLE UART --------------------
+static void setupBleUart() {
+  BLEDevice::init(BLE_NAME);
+
+  BLEServer* server = BLEDevice::createServer();
+  server->setCallbacks(new ServerCallbacks());
+
+  BLEService* service = server->createService(UART_SERVICE_UUID);
+
+  // TX (notify)
+  g_txChar = service->createCharacteristic(
+    UART_TX_UUID,
+    BLECharacteristic::PROPERTY_NOTIFY
+  );
+  g_txChar->addDescriptor(new BLE2902());
+
+  // RX (write)
+  BLECharacteristic* rxChar = service->createCharacteristic(
+    UART_RX_UUID,
+    BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_WRITE_NR
+  );
+  rxChar->setCallbacks(new RxCallbacks());
+
+  service->start();
+
+  BLEAdvertising* adv = BLEDevice::getAdvertising();
+  adv->addServiceUUID(UART_SERVICE_UUID);
+  adv->setScanResponse(true);
+  adv->start();
 }
 
-void sendHHMMToBasysNow() {
-  struct tm timeinfo;
-  if (!getLocalTime(&timeinfo, 50)) {
-    Serial.println("[TIME] getLocalTime FAILED (will resync NTP)");
-    syncTimeOnce();
-    return;
-  }
-
-  if (timeinfo.tm_year < (2020 - 1900)) {
-    Serial.println("[TIME] Time not valid yet (year < 2020) -> resync");
-    syncTimeOnce();
-    return;
-  }
-
-  int hh = timeinfo.tm_hour;
-  int mm = timeinfo.tm_min;
-
-  // Packet: 'T' + HHMM + '\n'
-  char pkt[8];
-  snprintf(pkt, sizeof(pkt), "T%02d%02d\n", hh, mm);
-
-  UartToBasys.print(pkt);
-  Serial.print("[UART] TX -> BASYS3: ");
-  Serial.print(pkt); // có '\n' sẵn
-}
+// -----------------------------------------------------
 
 void setup() {
   Serial.begin(115200);
-  delay(200);
-  Serial.println("==== ESP32-S3-CAM NTP (UTC+7) -> UART to Basys3 ====");
 
-  UartToBasys.begin(UART_BAUD, SERIAL_8N1, UART_RX_PIN, UART_TX_PIN);
-  Serial.printf("[UART] Serial1 begin baud=%lu, RX=%d, TX=%d\n",
-                (unsigned long)UART_BAUD, UART_RX_PIN, UART_TX_PIN);
+  // UART to FPGA
+  Serial2.begin(FPGA_BAUD, SERIAL_8N1, PIN_UART_RX, PIN_UART_TX);
 
-  connectWiFi();
+  setupBleUart();
+  setupWifiAndTime();
 
-  if (syncTimeOnce()) {
-    // ✅ Push 1 lần khi vừa sync được time (ESP32 boot)
-    delay(800);                 // cho Basys3 UART ổn định (tuỳ chọn)
-    sendHHMMToBasysNow();
-    boot_pushed = true;
-  } else {
-    Serial.println("[BOOT] NTP sync failed. Will keep trying in loop.");
-  }
+  bleNotify("Ready. Send L/R/U/D/C.\n");
+
+  // Sync time ONCE on boot (with short retry window)
+  syncTimeOnBootWithRetry(8000);
 }
 
 void loop() {
-  // Nếu WiFi rớt thì nối lại
-  if (WiFi.status() != WL_CONNECTED) {
-    Serial.println("[WIFI] Disconnected -> reconnect");
-    connectWiFi();
-    syncTimeOnce();
-  }
-
-  // ✅ Nếu boot lúc đầu chưa sync được -> khi nào sync OK thì push đúng 1 lần
-  if (!boot_pushed) {
-    struct tm timeinfo;
-    if (getLocalTime(&timeinfo, 10) && timeinfo.tm_year >= (2020 - 1900)) {
-      delay(200);
-      sendHHMMToBasysNow();
-      boot_pushed = true;
-    }
-  }
-
-  // Giữ nguyên chức năng: chỉ gửi giờ khi Basys3 yêu cầu
-  while (UartToBasys.available()) {
-    int c = UartToBasys.read();
-    Serial.printf("[UART] RX <- BASYS3: 0x%02X '%c'\n",
-                  (unsigned)c, (c >= 32 && c <= 126) ? c : '.');
-
+  // 1) If Basys3 sends 'G' => sync time ON DEMAND
+  while (Serial2.available()) {
+    char c = (char)Serial2.read();
     if (c == 'G') {
-      sendHHMMToBasysNow(); // vẫn giữ nguyên
+      syncTimeToFpgaOnce();
     }
   }
 
-  delay(20);
+  // 2) Optional: also accept USB Serial commands (quick test from PC)
+  while (Serial.available()) {
+    char c = (char)Serial.read();
+    if (isCmdChar(c)) {
+      char cmd = normCmd(c);
+      sendFpgaButton(cmd);
+      Serial.print("Sent BTN ");
+      Serial.println(cmd);
+    }
+  }
+
+  delay(5);
 }
