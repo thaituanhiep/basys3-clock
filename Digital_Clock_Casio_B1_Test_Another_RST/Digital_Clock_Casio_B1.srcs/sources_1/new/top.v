@@ -30,6 +30,7 @@ module top (
     // UART pins (FPGA <-> ESP32)
     input  wire        uart_rx_pin,
     output wire        uart_tx_pin,
+    
 
     // 7-seg
     output wire [3:0]  IO_SSEG_SEL,
@@ -99,6 +100,7 @@ module top (
 
     wire [5:0] ext_hh;
     wire [5:0] ext_mm;
+    wire [5:0] ext_ss;
     wire       ext_set_pulse;
 
     wire       ext_l_p, ext_r_p, ext_u_p, ext_d_p, ext_c_p;
@@ -110,6 +112,7 @@ module top (
         .rx_valid        (rx_valid),
         .hh              (ext_hh),
         .mm              (ext_mm),
+        .ss              (ext_ss),
         .time_valid_pulse(ext_set_pulse),
 
         .btn_left_pulse  (ext_l_p),
@@ -192,6 +195,7 @@ module top (
 
         .ext_hh        (ext_hh),
         .ext_mm        (ext_mm),
+        .ext_ss        (ext_ss),
         .ext_set_pulse (ext_set_pulse),
 
         .hour          (dc_hour),

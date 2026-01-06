@@ -12,6 +12,7 @@ module DigitalClock (
 
     input  wire [5:0] ext_hh,
     input  wire [5:0] ext_mm,
+    input  wire [5:0] ext_ss,
     input  wire       ext_set_pulse,
 
     output reg [3:0] digit0,
@@ -34,12 +35,7 @@ module DigitalClock (
   reg [5:0] minute = 34;
   reg [4:0] hour_r = 12;
 
-  reg skip_tick;
-
-  // Khởi tạo an toàn
-  initial begin
-    skip_tick = 1'b0;
-  end
+  reg skip_tick = 1'b0;   // ★ BẮT BUỘC PHẢI CÓ
 
   assign hour     = hour_r;
   assign min      = minute;
@@ -56,8 +52,8 @@ module DigitalClock (
     if (ext_set_pulse) begin
       if (ext_hh <= 23) hour_r <= ext_hh[4:0];
       if (ext_mm <= 59) minute <= ext_mm;
-      sec <= 0;
-      skip_tick <= 1'b1;
+      if (ext_ss <= 59) sec    <= ext_ss;
+      skip_tick <= 1'b1;     // bỏ tick kế tiếp
     end
 
     // ===== SET MIN =====
@@ -91,7 +87,7 @@ module DigitalClock (
     // ===== RUN MODE =====
     else if (tick_1hz) begin
       if (skip_tick) begin
-        skip_tick <= 1'b0;   // bỏ đúng 1 tick sau khi set
+        skip_tick <= 1'b0;   // bỏ đúng 1 tick
       end else begin
         if (sec == 59) begin
           sec <= 0;
