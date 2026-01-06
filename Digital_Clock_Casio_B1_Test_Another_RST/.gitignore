@@ -1,0 +1,95 @@
+# ===============================
+# Vivado / FPGA
+# ===============================
+
+# Vivado generated directories
+.cache/
+.hw/
+.ip_user_files/
+.runs/
+.sim/
+.xpr.tmp/
+
+# Vivado logs & journals
+*.jou
+*.log
+*.str
+*.backup
+*.wdb
+
+# Reports & temporary files
+*.rpt
+*.pb
+*.dmp
+
+# ===============================
+# Bitstream / outputs
+# ===============================
+*.bit
+*.bin
+*.ltx
+*.mcs
+
+# ===============================
+# OS / Editor junk
+# ===============================
+.DS_Store
+Thumbs.db
+
+.vscode/
+*.swp
+*.swo
+
+# ===============================
+# Git
+# ===============================
+*.orig
+
+# ===============================
+# OPTIONAL: keep only source
+# (Verilog / constraints)
+# ===============================
+# Uncomment if you want ONLY these files tracked
+# !*.v
+# !*.sv
+# !*.xdc
+# !*.md
+
+
+
+# ===== JVM / Vivado crash & log =====
+hs_err_pid*.dmp
+hs_err_pid*.log
+
+vivado_*.backup.jou
+vivado_*.backup.log
+vivado_pid*.str
+
+vivado.jou
+vivado.log
+
+# ===== Vivado / FPGA =====
+*.jou
+*.log
+*.str
+*.tmp
+
+
+
+
+# ===== Windows =====
+Thumbs.db
+Desktop.ini
+
+# ===== Editor =====
+.vscode/
+*.swp
+*.bak
+
+# ===== Build / Output =====
+build/
+dist/
+out/
+
+# ===== Backup files =====
+*~
