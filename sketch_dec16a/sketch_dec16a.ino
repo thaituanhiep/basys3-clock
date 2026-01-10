@@ -36,7 +36,8 @@ static BLEUUID UART_RX_UUID     ("6E400002-B5A3-F393-E0A9-E50E24DCCA9E");
 static BLEUUID UART_TX_UUID     ("6E400003-B5A3-F393-E0A9-E50E24DCCA9E");
 
 static BLECharacteristic* g_txChar = nullptr;
-static bool g_deviceConnected = false;
+static volatile int g_connCount = 0;
+
 
 // -------------------- Helpers --------------------
 static inline bool isCmdChar(char c) {
@@ -49,7 +50,7 @@ static inline char normCmd(char c) {
   return c;
 }
 
-// ★ NEW: Send HH MM SS
+// Send HH MM SS
 static void sendFpgaTimeHHMMSS(uint8_t hh, uint8_t mm, uint8_t ss) {
   char buf[12];
   // Example: T093745\n
@@ -67,7 +68,7 @@ static void sendFpgaButton(char codeUpper) {
 }
 
 static void bleNotify(const String& s) {
-  if (g_deviceConnected && g_txChar) {
+  if (g_connCount > 0 && g_txChar) {
     g_txChar->setValue(s.c_str());
     g_txChar->notify();
   }
@@ -152,15 +153,18 @@ static void syncTimeOnBootWithRetry(uint32_t maxWaitMs = 8000) {
 
 // -------------------- BLE Callbacks --------------------
 class ServerCallbacks : public BLEServerCallbacks {
-  void onConnect(BLEServer*) override {
-    g_deviceConnected = true;
-    bleNotify("Connected. Send L/R/U/D/C.\n");
+  void onConnect(BLEServer* pServer) override {
+    g_connCount++;
+    // QUAN TRỌNG: vẫn tiếp tục quảng cáo để thiết bị 2/3 connect được
+    BLEDevice::startAdvertising();
   }
-  void onDisconnect(BLEServer*) override {
-    g_deviceConnected = false;
+
+  void onDisconnect(BLEServer* pServer) override {
+    if (g_connCount > 0) g_connCount--;
     BLEDevice::startAdvertising();
   }
 };
+
 
 class RxCallbacks : public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic* pCharacteristic) override {
