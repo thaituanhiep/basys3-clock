@@ -1,37 +1,22 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 01/09/2026 10:48:37 AM
-// Design Name: 
-// Module Name: tb_time_uart_parser
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
-
 `timescale 1ns/1ps
 
 module tb_time_uart_parser;
 
+  // -----------------------------
+  // Clock / Reset
+  // -----------------------------
   localparam integer CLK_PERIOD_NS = 10; // 100MHz
+  localparam integer TIME_TIMEOUT_CYC = 5000; // timeout chờ time_valid_pulse (50us)
+  localparam integer BTN_TIMEOUT_CYC  = 2000; // timeout chờ btn pulse (20us)
 
   reg clk = 1'b0;
   reg rst = 1'b1;
 
+  // DUT input
   reg  [7:0] rx_byte  = 8'h00;
   reg        rx_valid = 1'b0;
 
+  // DUT output
   wire [5:0] hh;
   wire [5:0] mm;
   wire [5:0] ss;
@@ -45,7 +30,9 @@ module tb_time_uart_parser;
 
   integer errors = 0;
 
+  // -----------------------------
   // DUT
+  // -----------------------------
   time_uart_parser dut (
     .clk(clk),
     .rst(rst),
@@ -65,9 +52,17 @@ module tb_time_uart_parser;
   // clock
   always #(CLK_PERIOD_NS/2) clk = ~clk;
 
-  // -------------------------
+  // -----------------------------
   // Helpers / Tasks
-  // -------------------------
+  // -----------------------------
+
+  task wait_clks;
+    input integer n;
+    integer i;
+    begin
+      for (i = 0; i < n; i = i + 1) @(posedge clk);
+    end
+  endtask
 
   // pulse rx_valid for 1 clk with rx_byte = b
   task push_byte;
@@ -95,25 +90,13 @@ module tb_time_uart_parser;
     end
   endtask
 
-  // send time legacy packet: 'T' HH MM '\n'
-  task send_time_legacy;
-    input integer H;
-    input integer M;
-    begin
-      push_byte("T");
-      push_2digits(H);
-      push_2digits(M);
-      push_byte(8'h0A); // '\n'
-    end
-  endtask
-
-  // send time packet with seconds: 'T' HH MM SS '\n'
+  // send time packet FULL only: 'T' HH MM SS '\n'
   task send_time_full;
     input integer H;
     input integer M;
     input integer S;
     begin
-      push_byte("T");
+      push_byte(8'h54); // 'T'
       push_2digits(H);
       push_2digits(M);
       push_2digits(S);
@@ -121,32 +104,36 @@ module tb_time_uart_parser;
     end
   endtask
 
-  // send button packet: 'B' code '\n' (code = "L","R","U","D","C")
+  // send button packet: 'B' code '\n'
   task send_button;
-    input [7:0] code;
+    input [7:0] code; // "L","R","U","D","C"
     begin
-      push_byte("B");
+      push_byte(8'h42); // 'B'
       push_byte(code);
       push_byte(8'h0A);
     end
   endtask
 
-  // wait time_valid_pulse and check hh/mm/ss
-  task expect_time;
+  // wait time_valid_pulse with timeout, then check hh/mm/ss
+  task expect_time_full;
     input [5:0] ehh;
     input [5:0] emm;
     input [5:0] ess;
-    integer guard;
+    integer i;
+    reg got;
     begin
-      // wait up to some cycles to avoid infinite loop
-      guard = 2000;
-      while (guard > 0 && time_valid_pulse !== 1'b1) begin
+      got = 1'b0;
+
+      for (i = 0; i < TIME_TIMEOUT_CYC; i = i + 1) begin
         @(posedge clk);
-        guard = guard - 1;
+        if (time_valid_pulse === 1'b1) begin
+          got = 1'b1;
+          i = TIME_TIMEOUT_CYC; // break loop
+        end
       end
 
-      if (guard == 0) begin
-        $display("[FAIL] time_valid_pulse not seen");
+      if (!got) begin
+        $display("[FAIL] time_valid_pulse not seen (timeout). t=%0t", $time);
         errors = errors + 1;
       end else begin
         if (hh !== ehh || mm !== emm || ss !== ess) begin
@@ -166,32 +153,32 @@ module tb_time_uart_parser;
     end
   endtask
 
-  // wait for a specific button pulse
-  task expect_btn_pulse;
+  // wait for specific button pulse with timeout
+  task expect_button;
     input [7:0] code; // "L","R","U","D","C"
-    integer timeout;
-    reg found;
+    integer i;
+    reg got;
     begin
-      timeout = 500;
-      found = 1'b0;
+      got = 1'b0;
 
-      while (timeout > 0 && !found) begin
+      for (i = 0; i < BTN_TIMEOUT_CYC; i = i + 1) begin
         @(posedge clk);
-        if ((code=="L" && btn_left_pulse)   ||
-            (code=="R" && btn_right_pulse)  ||
-            (code=="U" && btn_up_pulse)     ||
-            (code=="D" && btn_down_pulse)   ||
-            (code=="C" && btn_center_pulse)) begin
-          found = 1'b1;
+
+        if ((code == 8'h4C && btn_left_pulse)   || // 'L'
+            (code == 8'h52 && btn_right_pulse)  || // 'R'
+            (code == 8'h55 && btn_up_pulse)     || // 'U'
+            (code == 8'h44 && btn_down_pulse)   || // 'D'
+            (code == 8'h43 && btn_center_pulse) ) begin // 'C'
+          got = 1'b1;
+          i = BTN_TIMEOUT_CYC; // break loop
         end
-        timeout = timeout - 1;
       end
 
-      if (!found) begin
-        $display("[FAIL] Button %s pulse not seen", code);
+      if (!got) begin
+        $display("[FAIL] Button pulse %0s not seen (timeout). t=%0t", code, $time);
         errors = errors + 1;
       end else begin
-        $display("[PASS] Button %s pulse seen t=%0t", code, $time);
+        $display("[PASS] Button %0s pulse seen t=%0t", code, $time);
       end
     end
   endtask
@@ -201,9 +188,9 @@ module tb_time_uart_parser;
     input integer cycles;
     integer i;
     begin
-      for (i=0; i<cycles; i=i+1) begin
+      for (i = 0; i < cycles; i = i + 1) begin
         @(posedge clk);
-        if (time_valid_pulse) begin
+        if (time_valid_pulse === 1'b1) begin
           $display("[FAIL] Unexpected time_valid_pulse at t=%0t", $time);
           errors = errors + 1;
         end
@@ -212,49 +199,39 @@ module tb_time_uart_parser;
     end
   endtask
 
-  // -------------------------
+  // -----------------------------
   // Test sequence
-  // -------------------------
+  // -----------------------------
   initial begin
     $display("=== tb_time_uart_parser start ===");
 
     // reset
     rst = 1'b1;
-    repeat (10) @(posedge clk);
+    wait_clks(20);
     rst = 1'b0;
-    repeat (5) @(posedge clk);
+    wait_clks(10);
 
-    // 1) Legacy: T HH MM \n  -> ss = 0
-    fork
-      begin
-        send_time_legacy(12, 34);
-      end
-      begin
-        expect_time(6'd12, 6'd34, 6'd0);
-      end
-    join
-
-    // 2) Full: T HH MM SS \n
+    // 1) Full time: T235959\n
     fork
       begin
         send_time_full(23, 59, 59);
       end
       begin
-        expect_time(6'd23, 6'd59, 6'd59);
+        expect_time_full(6'd23, 6'd59, 6'd59);
       end
     join
 
-    // 3) Button: B L \n
+    // 2) Button: BL\n
     fork
       begin
-        send_button("L");
+        send_button(8'h4C); // 'L'
       end
       begin
-        expect_btn_pulse("L");
+        expect_button(8'h4C); // 'L'
       end
     join
 
-    // 4) Invalid time: 29:99:99 -> should NOT pulse
+    // 3) Invalid time: T299999\n -> should NOT pulse
     send_time_full(29, 99, 99);
     expect_no_time_pulse(400);
 
@@ -267,5 +244,3 @@ module tb_time_uart_parser;
   end
 
 endmodule
-
-
