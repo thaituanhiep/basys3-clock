@@ -5,11 +5,11 @@ module sevseg (
     input      [3:0] binary_input_2,
     input      [3:0] binary_input_3,
 
-    input            IO_SSEG_DP,     // từ top: cho phép hiện ':'
+    input            IO_SSEG_DP,     //
 
     output reg [3:0] IO_SSEG_SEL,
     output reg [6:0] IO_SSEG,
-    output reg       IO_SSEG_DP_OUT  // DP thực sự ra board
+    output reg       IO_SSEG_DP_OUT  // 
 );
 
   reg [1:0] digit_index = 0;

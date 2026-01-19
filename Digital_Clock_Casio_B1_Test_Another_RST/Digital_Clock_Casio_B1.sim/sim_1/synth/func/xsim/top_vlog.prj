@@ -1,0 +1,6 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "D:/Xilinx/2025.1/Vivado/data/rsb/busdef" \
+"top_func_synth.v" \
+
+# Do not sort compile order
+nosort

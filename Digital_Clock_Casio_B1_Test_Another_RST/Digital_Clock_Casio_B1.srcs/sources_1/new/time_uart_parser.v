@@ -1,13 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// time_uart_parser
-// - Parses time packets and "remote button" packets from UART stream.
-// - Time packet supports:
-//      T HH MM \n        (legacy)
-//      T HH MM SS \n     (with seconds)
-// - Button packet unchanged
-//////////////////////////////////////////////////////////////////////////////////
-
 module time_uart_parser(
     input  wire       clk,
     input  wire       rst,
@@ -17,7 +8,7 @@ module time_uart_parser(
 
     output reg  [5:0] hh,               // 0..23
     output reg  [5:0] mm,               // 0..59
-    output reg  [5:0] ss,               // 0..59  ★ NEW
+    output reg  [5:0] ss,               // 0..59 
     output reg        time_valid_pulse,  // 1-cycle pulse
 
     output reg        btn_left_pulse,

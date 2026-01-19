@@ -1,6 +1,6 @@
 -------------------------------------
 | Tool Version : Vivado v.2025.1
-| Date         : Tue Jan  6 19:46:31 2026
+| Date         : Sat Jan 17 14:54:29 2026
 | Host         : TrungPC
 | Design       : design_1
 | Device       : xc7a35t-cpg236-1--

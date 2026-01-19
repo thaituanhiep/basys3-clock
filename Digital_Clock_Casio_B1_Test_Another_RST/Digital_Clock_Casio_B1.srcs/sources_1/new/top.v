@@ -1,21 +1,4 @@
 `timescale 1ns / 1ps
-// =====================================================
-// Basys3 Casio-style Clock - TOP
-// Adds "remote button press" pulses coming from ESP32-S3 over UART.
-// Remote is meant to behave exactly like physical BTNL/BTNR/BTNU/BTND/BTNC:
-//  - physical buttons still work
-//  - remote just injects the same 1-pulse events into the existing FSM paths
-//
-// UART RX protocol (ESP32 -> Basys3):
-//   Time sync:  'T' HH MM '\n'        e.g. T0937\n
-//   Button:     'B' <code> '\n'       code in {L,R,U,D,C}
-//               e.g. BL\n (press left), BC\n (press center)
-//
-// UART TX (Basys3 -> ESP32):
-//   Sends 'G' when BTNC pressed in CLOCK mode (kept from your current design)
-//
-// Clock: 100 MHz on Basys3
-// =====================================================
 
 module top (
     input  wire        clk,

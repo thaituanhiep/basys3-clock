@@ -1,8 +1,3 @@
-// ============================================================
-// alert_ctrl.v
-// FINAL FIX - ALARM + COUNTDOWN STOP WORKING
-// ============================================================
-
 module alert_ctrl (
     input  wire clk,
     input  wire rst,

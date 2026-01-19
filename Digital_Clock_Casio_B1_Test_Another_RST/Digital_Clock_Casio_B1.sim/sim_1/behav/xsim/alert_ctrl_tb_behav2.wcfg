@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="alert_ctrl_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="alert_ctrl_tb" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="805.001 ns"></ZoomEndTime>
+      <Cursor1Time time="717.925 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="180"></NameColumnWidth>
+      <ValueColumnWidth column_width="62"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="10" />
+   <wvobject fp_name="/alert_ctrl_tb/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alert_ctrl_tb/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alert_ctrl_tb/tick_1hz" type="logic">
+      <obj_property name="ElementShortName">tick_1hz</obj_property>
+      <obj_property name="ObjectShortName">tick_1hz</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alert_ctrl_tb/blink_1hz" type="logic">
+      <obj_property name="ElementShortName">blink_1hz</obj_property>
+      <obj_property name="ObjectShortName">blink_1hz</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alert_ctrl_tb/alarm_match" type="logic">
+      <obj_property name="ElementShortName">alarm_match</obj_property>
+      <obj_property name="ObjectShortName">alarm_match</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alert_ctrl_tb/cd_finished" type="logic">
+      <obj_property name="ElementShortName">cd_finished</obj_property>
+      <obj_property name="ObjectShortName">cd_finished</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alert_ctrl_tb/btnu_pulse" type="logic">
+      <obj_property name="ElementShortName">btnu_pulse</obj_property>
+      <obj_property name="ObjectShortName">btnu_pulse</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alert_ctrl_tb/btnd_pulse" type="logic">
+      <obj_property name="ElementShortName">btnd_pulse</obj_property>
+      <obj_property name="ObjectShortName">btnd_pulse</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alert_ctrl_tb/buzzer_en" type="logic">
+      <obj_property name="ElementShortName">buzzer_en</obj_property>
+      <obj_property name="ObjectShortName">buzzer_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/alert_ctrl_tb/led_alert" type="array">
+      <obj_property name="ElementShortName">led_alert[15:0]</obj_property>
+      <obj_property name="ObjectShortName">led_alert[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>
